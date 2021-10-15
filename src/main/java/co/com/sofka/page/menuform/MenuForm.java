@@ -46,11 +46,8 @@ public class MenuForm extends CommonActionsOnPages {
     public void goToJobTitles(){
         try{
             hover(menu_admin_viewAdminModule);
-            System.out.println("menu admin module");
             hover(menu_admin_job);
-            System.out.println("menu admin job");
             hover(menu_admin_viewJobTitleList);
-            System.out.println("menu job list");
             clickOn(menu_admin_viewJobTitleList);
         } catch (Exception exception){
             exception.printStackTrace();
