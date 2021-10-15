@@ -9,7 +9,7 @@ import org.junit.runner.RunWith;
         publish = true,
         plugin = {"pretty", "html:target/cucumber-report/cucumber.html"},
         features = {"src/test/resources/features/webui/jobtitle/JobTitle.feature"},
-        glue = {"co.com.sofka.stepdefinition.jobtitleform"},
+        glue = {"co.com.sofka.stepdefinition.jobtitleform.opt1.JobTitleCucumberOpt1StepDefinition"},
         tags = "not @ignore"
 )
 public class JobTitleRunner {

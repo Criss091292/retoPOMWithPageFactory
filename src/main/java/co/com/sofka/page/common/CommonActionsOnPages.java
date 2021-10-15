@@ -1,5 +1,6 @@
 package co.com.sofka.page.common;
 
+import co.com.sofka.util.Seconds;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
@@ -12,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
 import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
-
+import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeSelected;
 public class CommonActionsOnPages extends BaseSikulix{
     private static final Logger LOGGER = Logger.getLogger(CommonActionsOnPages.class);
     private static final String WEBDRIVER_NULL_MESSAGE = "\nWARNING!\n\rThe Webdriver is null, please check it.\n";
@@ -189,7 +190,10 @@ public class CommonActionsOnPages extends BaseSikulix{
         //Retrieve WebElemnt 'slider' to perform mouse hover
         //WebElement slider = driver.findElement(By.id("slider"));
         //Move mouse to x offset 50 i.e. in horizontal direction
-        actions.moveToElement(webElement,50,0).perform();
+        actions.moveToElement(webElement/*,50,0*/).perform();
+
     }
+
+
 
 }

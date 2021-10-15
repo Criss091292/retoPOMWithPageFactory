@@ -1,8 +1,8 @@
 package co.com.sofka.stepdefinition.jobtitleform.opt1;
 
-import co.com.sofka.model.landingpage.LandingPageModel;
 import co.com.sofka.model.loginform.LoginFormModel;
-import co.com.sofka.page.landingpage.LandingPage;
+import co.com.sofka.page.jobtitlesform.JobTitlesForm;
+import co.com.sofka.page.menuform.MenuForm;
 import co.com.sofka.page.loginform.LoginForm;
 import co.com.sofka.stepdefinition.setup.webui.WebUI;
 import io.cucumber.java.en.Given;
@@ -10,54 +10,52 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.apache.log4j.Logger;
 import org.junit.jupiter.api.Assertions;
+import static co.com.sofka.util.GenerateRandomString.generateRandomString;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class JobTitleCucumberOpt1StepDefinition extends WebUI {
     private static final Logger LOGGER = Logger.getLogger(JobTitleCucumberOpt1StepDefinition.class);
     private LoginFormModel loginFormModel;
     private LoginForm loginForm;
-    private LandingPageModel landingPageModel;
-    private LandingPage landingPage;
+    private MenuForm menuForm;
     //private By botonJobTitle;
     private static final String ASSERTION_EXCEPTION_MESSAGE = "Los valores suministrados no son los esperados.";
-    private static final String USERNAME = "Admin";
-    private static final String PASSWORD = "admin123";
+    private static final String RIGHT_USERNAME = "Admin";
+    private static final String RIGHT_PASSWORD = "admin123";
     //background
-    @Given("Me autentique exitosamente por la pagina de inicio de sesion, fui redirigido a la landing page y segui la ruta del menu admin,job job title y en el sitio pulso el boton agregar")
-    public void me_autentique_exitosamente_por_la_pagina_de_inicio_de_sesion_fui_redirigido_a_la_landing_page_y_segui_la_ruta_del_menu_admin_job_job_title_y_en_el_sitio_pulso_el_boton_agregar() {
-        throw new io.cucumber.java.PendingException();
-        /*try{
+    
+    private static final String LANDINGPAGE_URL="https://opensource-demo.orangehrmlive.com/index.php/dashboard";
+
+    @Given("autentique exitosamente en el sitio, desde la pagina principal seleccione el menu con rutau Admin-Job-JobTitle y luego pulso add")
+    public void autentique_exitosamente_en_el_sitio_desde_la_pagina_principal_seleccione_el_menu_con_rutau_admin_job_job_title_y_luego_pulso_add() {
+        try{
             generalSetUp();
-            dataConfiguration();
-            loginForm = new LoginForm(driver, loginFormModel);
-            loginForm.doLogin();
-            //botonJobTitle = By.id("menu_admin_viewJobTitleList");
-            landingPageModel = new LandingPageModel();
-            landingPage = new LandingPage(driver, landingPageModel);
-            landingPage.goToJobTitles();
+            doSucessfullyLogin();
+            goToJobTitlesPage();
+            goToAddJobTitlePage();
+            List<String> jobTitles = new ArrayList<String>();
+            //String jobTitle = generateJobTitleToTest(jobTitles);
         } catch (Exception exception){
             quitDriver();
             LOGGER.error(exception.getMessage(), exception);
             Assertions.fail(exception.getMessage());
-        }*/
+        }
     }
-
-    @When("diligencio todos los campos del formulario y pulso save")
-    public void diligencio_todos_los_campos_del_formulario_y_pulso_save() {
+    
+    @When("lleno todos los campos del formulario y pulso save")
+    public void lleno_todos_los_campos_del_formulario_y_pulso_save() {
+        // Write code here that turns the phrase above into concrete actions
         throw new io.cucumber.java.PendingException();
-        /*try {
-
-        } catch (Exception exception){
-            quitDriver();
-            LOGGER.error(exception.getMessage(), exception);
-            Assertions.fail(exception.getMessage());
-        }*/
     }
-
-    /*@Then("en la pagina de job titles deberia aparecer en la tabla el no nombre y la nota guardados")
-    public void en_la_pagina_de_job_titles_deberia_aparecer_en_la_tabla_el_no_nombre_y_la_nota_guardados() {
-        try {
-
-            Assertions.assertTrue(1==1,
+   
+    @Then("deberia visualizarse el jobtitle y el job description diligenciado en la tabla que contiene todos los jobtitle")
+    public void deberia_visualizarse_el_jobtitle_y_el_job_description_diligenciado_en_la_tabla_que_contiene_todos_los_jobtitle() {
+        // Write code here that turns the phrase above into concrete actions
+        throw new io.cucumber.java.PendingException();
+         /*try {
+            Assertions.assertTrue(loginForm.getLandingPage().getWelcomeMessage().contains("Welcome"),
                     ASSERTION_EXCEPTION_MESSAGE
             );
             //quitDriver();
@@ -65,15 +63,32 @@ public class JobTitleCucumberOpt1StepDefinition extends WebUI {
             quitDriver();
             LOGGER.error(exception.getMessage(), exception);
             Assertions.fail(exception.getMessage());
-        }
-    }*/
+        }*/
+    }
 
-    //Funciones comunes:
-    private void dataConfiguration(){
+    //Functions...
+    public void doSucessfullyLogin(){
         loginFormModel = new LoginFormModel();
-        loginFormModel.setUsername(USERNAME);
-        loginFormModel.setPassword(PASSWORD);
+        loginFormModel.setUsername(RIGHT_USERNAME);
+        loginFormModel.setPassword(RIGHT_PASSWORD);
+        loginForm = new LoginForm(driver, loginFormModel);
+        loginForm.doLogin(driver);
+    }
+    public void goToJobTitlesPage(){
+        menuForm = new MenuForm(driver);
+        menuForm.goToJobTitles();
+    }
+    public void goToAddJobTitlePage(){
+        JobTitlesForm jobTitlesForm = new JobTitlesForm(driver);
+        jobTitlesForm.goToAddJobTitle();
+    }
 
+    public String generateJobTitleToTest(List<String> existingJobTitlesList){
+        String generatedJobTitle = generateRandomString(8);
+            if(existingJobTitlesList.contains(generatedJobTitle)){
+                generatedJobTitle = generateJobTitleToTest(existingJobTitlesList);
+            }
+            return generatedJobTitle;
     }
 
 }
