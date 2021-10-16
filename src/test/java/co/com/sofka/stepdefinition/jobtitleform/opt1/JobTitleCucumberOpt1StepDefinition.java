@@ -59,25 +59,30 @@ public class JobTitleCucumberOpt1StepDefinition extends WebUI {
     
     @When("lleno todos los campos del formulario y pulso save")
     public void lleno_todos_los_campos_del_formulario_y_pulso_save() {
-        addJobTitleFormModel = new AddJobTitleFormModel();
-        addJobTitleFormModel.setJobTitle(generateJobTitleToTest(jobTitles));
-        addJobTitleFormModel.setJobDescription(generateRandomString(50));
-        addJobTitleFormModel.setNote(generateRandomString(20));
-        addJobTitle= new AddJobTitleForm(driver, addJobTitleFormModel);
-        addJobTitle.fillJobTitleForm();
-        addJobTitle.submitForm();
-        jobTitlesForm = new JobTitlesForm(driver);
+        try{
+            addJobTitleFormModel = new AddJobTitleFormModel();
+            addJobTitleFormModel.setJobTitle(generateJobTitleToTest(jobTitles));
+            addJobTitleFormModel.setJobDescription(generateRandomString(50));
+            addJobTitleFormModel.setNote(generateRandomString(20));
+            addJobTitle= new AddJobTitleForm(driver, addJobTitleFormModel);
+            addJobTitle.fillJobTitleForm();
+            addJobTitle.submitForm();
+            jobTitlesForm = new JobTitlesForm(driver);
+        } catch (Exception exception){
+            quitDriver();
+            exception.printStackTrace();
+            LOGGER.error(exception.getMessage(), exception);
+            Assertions.fail(exception.getMessage());
+        }
     }
    
     @Then("deberia visualizarse el jobtitle y el job description diligenciado en la tabla que contiene todos los jobtitle")
     public void deberia_visualizarse_el_jobtitle_y_el_job_description_diligenciado_en_la_tabla_que_contiene_todos_los_jobtitle() {
-        // Write code here that turns the phrase above into concrete actions
-        //throw new io.cucumber.java.PendingException();
-         try {
+        try {
             Assertions.assertTrue(jobTitlesForm.getJobTitleList().contains(addJobTitleFormModel.getJobTitle()),
                     ASSERTION_EXCEPTION_MESSAGE
             );
-            //quitDriver();
+            quitDriver();
         } catch (Exception exception){
             quitDriver();
             exception.printStackTrace();
